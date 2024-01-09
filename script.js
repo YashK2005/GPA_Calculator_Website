@@ -3,8 +3,9 @@ function addCourse() {
     const courseInput = document.createElement('div');
     courseInput.className = 'course';
     courseInput.innerHTML = `
-        <input type="number" min="0" max="100" placeholder="Grade (%)" step="0.01" required />
-        <input type="number" min="0" placeholder="Weight" step="0.1" required />
+        <input id="name" type="string" placeholder="Course Name" required />
+        <input id="grade" type="number" min="0" max="100" placeholder="Grade (%)" step="1" required />
+        <input id="weight" type="number" min="0" placeholder="Weight" step="0.01" required />
         <button type="button" onclick="removeCourse(this)">Remove</button>
     `;
     coursesDiv.appendChild(courseInput);
@@ -21,8 +22,10 @@ function calculateGPA() {
     let totalWeight = 0, totalWeightedGPA = 0;
 
     courses.forEach(course => {
-        const grade = parseFloat(course.children[0].value);
-        const weight = parseFloat(course.children[1].value);
+        const name = course.querySelector('#name').value;
+        const grade = parseFloat(course.querySelector('#grade').value);
+        
+        const weight = parseFloat(course.querySelector('#weight').value);
         if (!isNaN(grade) && !isNaN(weight)) {
             totalWeight += weight;
             totalWeightedGPA += convertGradeToGPA(grade) * weight;
